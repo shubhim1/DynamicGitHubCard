@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FetchDummyData — GitHub Card UI</title>
+  <style>
+    /* ===== Reset & base ===== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, Segoe UI, Roboto, 'Helvetica Neue', Arial;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      background: linear-gradient(180deg, #0f172a 0%, #071026 100%);
+      color: #e6eef8;
+    }
+
+    /* ===== Container ===== */
+    .wrapper { width: 100%; max-width: 980px; }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .title { font-size: 20px; font-weight: 600; }
+    .subtitle { font-size: 13px; color: #9fb0c8; }
+
+    /* ===== Button ===== */
+    .btn {
+      background: #1f6feb;
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: #fff;
+      border: 0;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 6px 18px rgba(31, 111, 235, 0.18);
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .btn:active { transform: translateY(1px); }
+
+    /* ===== Grid ===== */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+    }
+    @media (max-width: 880px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== GitHub Card ===== */
+    .github-card {
+      position: relative;
+      padding: 22px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 30px rgba(2,6,23,0.7);
+      min-height: 220px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      transition: transform .2s ease;
+    }
+    .github-card:hover { transform: translateY(-6px); }
+    .github-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 17px;
+      padding: 1px;
+      background: linear-gradient(90deg, #7c3aed, #06b6d4, #f59e0b);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: .9;
+      animation: slide 6s linear infinite;
+    }
+    @keyframes slide {
+      0% { filter: hue-rotate(0deg); }
+      50% { filter: hue-rotate(120deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    .avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 12px;
+      flex: 0 0 110px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #0b1220, #051028);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .meta { flex: 1; }
+    .name { font-size: 18px; font-weight: 700; color: #f1f5f9; }
+    .handle { font-size: 13px; color: #9fb0c8; margin-top: 4px; }
+    .bio { margin-top: 10px; font-size: 14px; color: #c8d8ea; line-height: 1.3; }
+
+    .stats {
+      display: flex;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .stat {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      color: #e6eef8;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .stat .num { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+    .stat .label { color: #9fb0c8; font-size: 12px; }
+    .placeholder { opacity: .5; }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      padding: 18px;
+      border-radius: 12px;
+      color: #cde3f7;
+    }
+    .panel h4 { margin-bottom: 8px; }
+    .hint { font-size: 13px; color: #9fb0c8; }
+
+    /* ===== Modal ===== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(2,6,23,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity .18s ease, visibility .18s;
+    }
+    .modal-backdrop.open {
+      visibility: visible;
+      opacity: 1;
+    }
+    .modal {
+      width: 100%;
+      max-width: 520px;
+      background: linear-gradient(180deg, #071233, #041026);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.04);
+      position: relative;
+    }
+    .modal h3 { margin-bottom: 8px; }
+    .modal p { color: #9fb0c8; margin-bottom: 12px; }
+    .form-row { display: flex; gap: 8px; }
+    .input {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      color: #e6eef8;
+    }
+    .modal .btn { flex: 0 0 auto; }
+    .muted { font-size: 12px; color: #7f9fb8; margin-top: 8px; }
+    .footer-note { margin-top: 16px; font-size: 12px; color: #9fb0c8; }
+    .center { display: flex; align-items: center; gap: 8px; }
+
+    /* ===== Close Button ===== */
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: #e6eef8;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* ===== Error Msg ===== */
+    .errorMsg {
+      color: #ff6b6b;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+    .errorMsg.hidden { display: none; }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <div>
+        <div class="title">FetchDummyData — GitHub Card</div>
+        <div class="subtitle">Open modal, paste a GitHub username and update the card (JS hooks provided)</div>
+      </div>
+      <div class="center">
+        <button id="openModalBtn" class="btn">Open GitHub Modal</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <!-- GitHub Card -->
+        <div id="githubProfilePic" class="github-card">
+          <div class="avatar">
+            <img id="profileImage" src="" alt="Profile Picture" />
+          </div>
+
+          <div class="meta">
+            <div class="name placeholder" id="name">Name • Not set</div>
+            <div class="handle placeholder" id="Username">@username</div>
+            <div class="bio placeholder" id="bio">
+              User bio or description will appear here after fetching from GitHub API.
+            </div>
+            <div class="stats">
+              <div class="stat">
+                <div class="num placeholder" id="followers">--</div>
+                <div class="label">Followers</div>
+              </div>
+              <div class="stat">
+                <div class="num placeholder" id="repos">--</div>
+                <div class="label">Public Repos</div>
+              </div>
+              <div class="stat">
+                <div class="num placeholder" id="gists">--</div>
+                <div class="label">Public Gists</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-note">
+          Tip: For testing use usernames like <code>octocat</code> or your GitHub username.
+        </div>
+      </div>
+
+      <aside class="panel">
+        <h4>How it works</h4>
+        <p class="hint">
+          Click <strong>Open GitHub Modal</strong>, enter a GitHub username and click <strong>Update Card</strong>.
+          Use JS to call <code>https://api.github.com/users/&lt;username&gt;</code>, parse the JSON and update elements.
+        </p>
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.04);margin:12px 0">
+        <p><strong>JS Hooks (IDs to use):</strong></p>
+        <ul style="color:#cfe6fb;font-size:13px">
+          <li><code>openModalBtn</code> — button that opens modal</li>
+          <li><code>modalBackdrop</code> — modal backdrop element</li>
+          <li><code>githubUsername</code> — input field</li>
+          <li><code>submitBtn</code> — button to fetch data</li>
+          <li><code>profileImage</code>, <code>name</code>, <code>Username</code>, <code>bio</code>, <code>followers</code>, <code>repos</code>, <code>gists</code></li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button id="closeModalBtn" class="close-btn" aria-label="Close Modal">✕</button>
+      <h3 id="modalTitle">Enter GitHub Username</h3>
+      <p>Type a username (e.g. <code>octocat</code>) and click <strong>Update Card</strong>.</p>
+      <div class="form-row">
+        <input id="githubUsername" class="input" type="text" placeholder="github username" aria-label="GitHub username" />
+        <button id="submitBtn" class="btn">Update Card</button>
+      </div>  
+      <p class="errorMsg hidden">⚠️ Enter username to get data</p>
+      <div class="muted">
+        By clicking update, your JS will call GitHub's public API and populate the card above.
+      </div>
+    </div>
+  </div>
+</body>
+<script src="script.js"></script>
+</html>
