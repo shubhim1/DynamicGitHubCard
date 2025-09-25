@@ -48,7 +48,7 @@ submitBtn.addEventListener('click', (e) => {
                 followers.innerHTML = `${data.followers || 'followers not found'}`
                 repos.innerHTML = `${data.public_repos || 'repos not found'}`
                 gists.innerHTML = `${data.public_gists === 0 ? 0 : (data.public_gists) || 'Gists not found'}`
-                profileImage.src = data.avatar_url
+                profileImage.src = data.avatar_url 
 
                 modalBackdrop.classList.remove('open');
 
