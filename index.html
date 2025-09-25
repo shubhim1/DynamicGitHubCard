@@ -80,8 +80,7 @@
     @media (max-width: 880px) {
       .grid {
         grid-template-columns: 1fr;
-        /* Mobile: Increased gap between the two columns (Card/Button/Tip column and Info Panel column) */
-        gap: 32px; 
+        gap: 32px;
       }
     }
 
@@ -346,7 +345,19 @@
       .github-card {
         flex-direction: column;
         text-align: center;
-        padding: 16px;
+        padding: 18px 12px;
+        /* NEW FIX: Add margin-top to push the card down from the header/title block */
+        margin-top: 15px; 
+      }
+      
+      /* Ensure the meta section takes up maximum width */
+      .github-card .meta {
+        width: 100%; 
+      }
+      
+      /* Reduced font size for tighter screens */
+      .name {
+          font-size: 17px;
       }
 
       .avatar {
@@ -360,7 +371,8 @@
       }
 
       .stats {
-        justify-content: center;
+        justify-content: space-evenly; /* Evenly distribute stats */
+        gap: 8px; /* Reduce gap between stats */
       }
       
       /* FIX: Stop "shaking" by disabling border animation */
@@ -369,26 +381,35 @@
         filter: hue-rotate(0deg); 
       }
       
-      /* New: Ensure button is full width on very small screens, 
-         as it's now inside the main column */
+      /* Ensure button is full width */
       .center .btn {
           width: 100%;
       }
       
-      /* New Fix: Add space below the button before the tip */
+      /* Add space below the button before the tip */
       .center[style="margin-top: 20px;"] {
         margin-bottom: 12px; 
       }
     }
 
     @media (max-width: 480px) {
-      .form-row {
-        flex-direction: column;
-      }
+        .form-row {
+            flex-direction: column;
+        }
 
-      .form-row .btn {
-        width: 100%;
-      }
+        .form-row .btn {
+            width: 100%;
+        }
+
+        /* Further reduction in padding for smallest screens */
+        .github-card {
+            padding: 16px 8px; 
+        }
+        
+        /* Center title/subtitle on very narrow screens */
+        .header > div:first-child {
+            text-align: center;
+        }
     }
   </style>
 </head>
@@ -400,7 +421,7 @@
         <div class="title">FetchDummyData — GitHub Card</div>
         <div class="subtitle">Open modal, paste a GitHub username and update the card (JS hooks provided)</div>
       </div>
-      </div>
+    </div>
 
     <div class="grid">
       <div>
