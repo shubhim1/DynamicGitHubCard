@@ -148,6 +148,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      border-radius: 0;
     }
 
     .meta {
@@ -291,11 +292,20 @@
       color: #9fb0c8;
     }
 
+    /* NOTE: .center style is kept for button container in the new position */
     .center {
       display: flex;
       align-items: center;
       gap: 8px;
     }
+    
+    /* Center the button on small screens */
+    @media (max-width: 600px) {
+        .center {
+            justify-content: center;
+        }
+    }
+
 
     /* ===== Close Button ===== */
     .close-btn {
@@ -320,7 +330,7 @@
       display: none;
     }
 
-    /* ===== Responsive Fixes ===== */
+    /* ===== Responsive Fixes (Updated Section) ===== */
     @media (max-width: 600px) {
       body {
         padding: 12px;
@@ -333,8 +343,8 @@
       }
 
       .avatar {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
         flex: none;
       }
 
@@ -344,6 +354,18 @@
 
       .stats {
         justify-content: center;
+      }
+      
+      /* FIX: Stop "shaking" by disabling border animation */
+      .github-card::before {
+        animation: none;
+        filter: hue-rotate(0deg); 
+      }
+      
+      /* New: Ensure button is full width on very small screens, 
+         as it's now inside the main column */
+      .center .btn {
+          width: 100%;
       }
     }
 
@@ -366,20 +388,15 @@
         <div class="title">FetchDummyData — GitHub Card</div>
         <div class="subtitle">Open modal, paste a GitHub username and update the card (JS hooks provided)</div>
       </div>
-      <div class="center">
-        <button id="openModalBtn" class="btn">Open GitHub Modal</button>
       </div>
-    </div>
 
     <div class="grid">
       <div>
-        <!-- GitHub Card -->
         <div id="githubProfilePic" class="github-card">
           <div class="avatar">
             <img id="profileImage" src="https://avatars.githubusercontent.com/u/0?v=4" alt="Profile Picture" width="100"
-              height="100" style="border-radius:0;" />
+              height="100" />
           </div>
-
 
           <div class="meta">
             <div class="name placeholder" id="name">Name • Not set</div>
@@ -403,6 +420,11 @@
             </div>
           </div>
         </div>
+        
+        <div class="center" style="margin-top: 20px;">
+          <button id="openModalBtn" class="btn">Open GitHub Modal</button>
+        </div>
+
         <div class="footer-note">
           Tip: For testing use usernames like <code>octocat</code> or your GitHub username.
         </div>
@@ -428,7 +450,6 @@
     </div>
   </div>
 
-  <!-- Modal -->
   <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button id="closeModalBtn" class="close-btn" aria-label="Close Modal">✕</button>
